@@ -1,1 +1,68 @@
 @import "tailwindcss";
+
+/* 1. Define Semantic Variables */
+:root {
+    /* DARK MODE (Default) */
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1a1a1a;
+    --text-primary: #ededed;
+    --text-secondary: rgba(237, 237, 237, 0.6);
+    --accent: #c9a574;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* LIGHT MODE OVERRIDES */
+html.light-mode {
+    --bg-primary: #ffffff;
+    /* Pure White */
+    --bg-secondary: #f4f4f5;
+    /* Zinc 100 */
+    --text-primary: #0a0a0a;
+    /* Almost Black */
+    --text-secondary: rgba(10, 10, 10, 0.7);
+    --accent: #b08d55;
+    /* Slightly darker gold for contrast on light */
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+@theme {
+    /* Map Tailwind classes to these dynamic variables */
+    /* "studio-black" now means "Theme Background" (Dark or Light) */
+    --color-studio-black: var(--bg-primary);
+    --color-studio-gray: var(--bg-secondary);
+
+    /* "studio-white" now means "Theme Text" (Light or Dark) */
+    --color-studio-white: var(--text-primary);
+
+    --color-studio-accent: var(--accent);
+
+    --font-serif: "Cormorant Garamond", serif;
+    --font-sans: "Montserrat", sans-serif;
+}
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+        font-family: var(--font-sans);
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Elegant Serif Headings */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: var(--font-serif);
+    }
+}
+
+@utility text-balance {
+    text-wrap: balance;
+}

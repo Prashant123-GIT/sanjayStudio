@@ -71,14 +71,14 @@ export default function HeroSlider({
           <button
             onClick={prev}
             aria-label="Previous slide"
-            className="hidden sm:grid absolute left-4 top-1/2 -translate-y-1/2 h-11 w-11 place-items-center rounded-full bg-white/85 border border-black/10 backdrop-blur active:scale-[0.98]"
+            className="hidden sm:grid absolute left-6 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full bg-black/20 border border-white/10 text-white backdrop-blur-md hover:bg-black/40 transition-all active:scale-95"
           >
             ‹
           </button>
           <button
             onClick={next}
             aria-label="Next slide"
-            className="hidden sm:grid absolute right-4 top-1/2 -translate-y-1/2 h-11 w-11 place-items-center rounded-full bg-white/85 border border-black/10 backdrop-blur active:scale-[0.98]"
+            className="hidden sm:grid absolute right-6 top-1/2 -translate-y-1/2 h-12 w-12 place-items-center rounded-full bg-black/20 border border-white/10 text-white backdrop-blur-md hover:bg-black/40 transition-all active:scale-95"
           >
             ›
           </button>
@@ -87,15 +87,15 @@ export default function HeroSlider({
 
       {/* Dots */}
       {slides.length > 1 && (
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2">
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-3">
           {slides.map((_, i) => (
             <button
               key={i}
               onClick={() => goto(i)}
               aria-label={`Go to slide ${i + 1}`}
               className={[
-                "h-2.5 rounded-full transition-all",
-                i === index ? "w-6 bg-emerald-700" : "w-2.5 bg-white/70 hover:bg-white",
+                "h-[2px] transition-all duration-500",
+                i === index ? "w-12 bg-white" : "w-6 bg-white/30 hover:bg-white/60",
               ].join(" ")}
             />
           ))}

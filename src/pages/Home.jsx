@@ -1,687 +1,319 @@
 // pages/Home.jsx
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import HeroSlider from "../components/HeroSlider.jsx";
 
 export default function Home() {
-  const slides = [
-    // Replace these with your real files in /public
-    { type: "video", src: "/wedding-hero-1.mp4", alt: "Wedding highlight" },
-    { type: "image", src: "/wedding-hero-2.jpg", alt: "Ceremony" },
-    { type: "image", src: "/wedding-hero-3.jpg", alt: "Reception" },
-  ];
-
-  // simple fade-up helper
-  const fadeUp = (delay = 0) => ({
-    initial: { opacity: 0, y: 14 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, amount: 0.5 },
-    transition: { duration: 0.55, delay },
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
   });
 
-  function StarIcon({ className, half = false }) {
-    return half ? (
-      <svg
-        viewBox="0 0 24 24"
-        className={className}
-        aria-hidden="true"
-        fill="currentColor"
-      >
-        <defs>
-          <linearGradient id="halfGrad">
-            <stop offset="50%" stopColor="currentColor" />
-            <stop offset="50%" stopColor="transparent" />
-          </linearGradient>
-        </defs>
-        <path
-          d="M12 17.3 6.9 20l1-5.8L4 9.8l5.9-.9L12 3.5l2.1 5.4 5.9.9-3.9 4.4 1 5.8z"
-          fill="url(#halfGrad)"
-          stroke="currentColor"
-          strokeWidth="1"
-        />
-      </svg>
-    ) : (
-      <svg
-        viewBox="0 0 24 24"
-        className={className}
-        aria-hidden="true"
-        fill="currentColor"
-      >
-        <path d="M12 17.3 6.9 20l1-5.8L4 9.8l5.9-.9L12 3.5l2.1 5.4 5.9.9-3.9 4.4 1 5.8z" />
-      </svg>
-    );
-  }
-
-  function QuotationIcon(props) {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-        <path
-          d="M9 7c-2.2 0-4 1.8-4 4 0 1.9 1.3 3.5 3 3.9V19h3v-7c0-2.2-1.8-5-2-5Zm9 0c-2.2 0-4 1.8-4 4 0 1.9 1.3 3.5 3 3.9V19h3v-7c0-2.2-1.8-5-2-5Z"
-          stroke="currentColor"
-          strokeWidth="1.2"
-        />
-      </svg>
-    );
-  }
+  const slides = [
+    { type: "image", src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070", alt: "Ceremony" },
+    { type: "image", src: "https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&q=80&w=1974", alt: "Reception" },
+    { type: "image", src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=2070", alt: "Portrait" }
+  ];
 
   return (
-    <>
-      {/* Full-bleed hero with overlaid serif heading */}
-      <div className="relative">
-        <HeroSlider slides={slides} heightClass="h-[56vh] md:h-[78vh]" />
+    <div ref={containerRef} className="bg-studio-black text-studio-white transition-colors duration-300">
+      {/* 1. HERO SECTION: Full Screen Immersive */}
+      <div className="relative h-screen w-full overflow-hidden">
+        <HeroSlider slides={slides} heightClass="h-full" />
 
-        {/* Overlaid headline */}
-        <div className="pointer-events-none absolute inset-0 grid place-items-center px-4">
+        {/* Overlay with massive typography */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/30 pointer-events-none">
           <motion.h1
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 100 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-            className="brand-serif text-white text-4xl sm:text-5xl md:text-6xl lg:text-[64px] font-semibold text-center leading-tight drop-shadow-[0_6px_32px_rgba(0,0,0,0.45)]"
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-center text-white"
           >
-            Top Wedding Planners in Ranchi
+            <span className="block font-serif text-6xl md:text-9xl italic tracking-tighter loading-tight mix-blend-overlay opacity-90">
+              Capturing
+            </span>
+            <span className="block font-sans text-xs md:text-sm tracking-[0.4em] uppercase text-white/80 mt-4 mb-4">
+              Timeless &bull; Cinematic &bull; Real
+            </span>
+            <span className="block font-serif text-6xl md:text-9xl tracking-tighter leading-tight mix-blend-overlay opacity-90">
+              Moments
+            </span>
           </motion.h1>
         </div>
+
+        {/* Scroll Indicator */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5, duration: 1 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        >
+          <span className="text-[10px] uppercase tracking-[0.2em] text-white/50">Scroll</span>
+          <div className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent" />
+        </motion.div>
       </div>
 
-      {/* Blush content band with big heading + buttons */}
-      <section
-        className="px-4 py-12 md:py-16"
-        style={{ backgroundColor: "#f8efee" }}
-      >
-        <div className="mx-auto max-w-5xl text-center">
-          <motion.h2
-            {...fadeUp()}
-            className="brand-serif text-3xl md:text-[44px] font-semibold tracking-tight text-emerald-800"
-          >
-            Crafting Your Dream Wedding with Snjay Studio
-          </motion.h2>
-
+      {/* 2. INTRODUCTION: Minimal Text */}
+      <section className="py-24 md:py-32 px-6">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.p
-            {...fadeUp(0.05)}
-            className="mt-5 text-[17px] leading-7 text-gray-800/90 max-w-3xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="font-serif text-3xl md:text-5xl leading-tight text-studio-white/90"
           >
-            Wedding planning can be exciting and overwhelming. From venue
-            selection to décor, hospitality, entertainment, and cinematic
-            films—we curate timeless celebrations with a modern touch.
+            "We don't just take photographs. We craft <span className="text-studio-accent italic">visual legacies</span> that you will cherish for generations."
           </motion.p>
-
-          {/* Dual CTAs (purple + emerald, like the reference) */}
-          <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-white font-semibold shadow-sm bg-[#6c1d86] hover:opacity-95 active:scale-[0.99]"
-            >
-              Get Free Quote
-            </a>
-            <a
-              href="https://wa.me/your-number"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-white font-semibold shadow-sm bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99]"
-            >
-              Chat with us
-            </a>
+          <div className="mt-12 flex justify-center gap-8">
+            <Stats number="10+" label="Years Experience" />
+            <Stats number="500+" label="Weddings Curated" />
+            <Stats number="100%" label="Love Stories" />
           </div>
         </div>
       </section>
 
-      {/* Marquee */}
-      <section
-        className="border-y border-black/10 py-4"
-        style={{ backgroundColor: "#f8efee" }}
-      >
-        <div className="overflow-hidden">
-          <motion.div
-            initial={{ x: 0 }}
-            animate={{ x: ["0%", "-50%"] }}
-            transition={{ repeat: Infinity, duration: 14, ease: "linear" }}
-            className="flex gap-8 whitespace-nowrap text-sm text-gray-900/80 uppercase tracking-[0.18em]"
-          >
-            {Array.from({ length: 20 }).map((_, i) => (
-              <span key={i}>
-                Wedding • Pre-Wedding • Haldi • Sangeet • Reception • Birthday •
-                Maternity • Couple Shoots • Cinematic Films • Venue • Decor •
-                Hospitality •
-              </span>
-            ))}
-          </motion.div>
+      {/* 3. SHOWCASE: Asymmetric Grid (Masonry Vibe) */}
+      <section className="py-20 px-4 md:px-8">
+        <div className="max-w-[1600px] mx-auto grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+          {/* Col 1 */}
+          <div className="md:col-span-4 flex flex-col gap-6 mt-12">
+            <PortfolioCard src="https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&q=80&w=2070" title="Destination" category="Venues" />
+            <PortfolioCard src="https://images.unsplash.com/photo-1623156293998-3238ab3c9a62?auto=format&fit=crop&q=80&w=1974" title="Intimate" category="Moments" aspectRatio="aspect-[3/4]" />
+          </div>
+
+          {/* Col 2 - Staggered */}
+          <div className="md:col-span-4 flex flex-col gap-6">
+            <PortfolioCard src="https://images.unsplash.com/photo-1520854221256-17451cc330e7?auto=format&fit=crop&q=80&w=1974" title="Details" category="Decor" aspectRatio="aspect-[3/4]" />
+            <div className="py-12 text-center">
+              <h3 className="font-serif text-4xl mb-4 italic text-studio-white">Our Philosophy</h3>
+              <p className="text-sm text-studio-white/60 leading-relaxed max-w-xs mx-auto">
+                We believe in the beauty of the unscripted. The stolen glances, the tearful smiles, the chaos and the calm.
+              </p>
+              <a href="/portfolio" className="inline-block mt-6 border-b border-studio-accent text-studio-accent text-xs uppercase tracking-widest pb-1 hover:text-studio-white transition-colors">View Portfolio</a>
+            </div>
+            <PortfolioCard src="https://images.unsplash.com/photo-1522673607200-1645062cd958?auto=format&fit=crop&q=80&w=2070" title="Portraits" category="Couples" />
+          </div>
+
+          {/* Col 3 */}
+          <div className="md:col-span-4 flex flex-col gap-6 mt-24">
+            <PortfolioCard src="https://images.unsplash.com/photo-1533261271171-ec6e0ca8675c?auto=format&fit=crop&q=80&w=1974" title="Celebration" category="Events" aspectRatio="aspect-[3/4]" />
+            <PortfolioCard src="https://images.unsplash.com/photo-1546193430-c2d207739ed7?auto=format&fit=crop&q=80&w=1974" title="Rituals" category="Tradition" />
+          </div>
         </div>
       </section>
 
-      {/* Services */}
-      <section className="px-4 py-14" style={{ backgroundColor: "#f8efee" }}>
-        <div className="mx-auto max-w-6xl">
-          <h3 className="brand-serif text-center text-3xl md:text-[40px] font-semibold">
-            <span className="text-emerald-800">Our </span>
-            <span className="text-[#5e2b97]">Services</span>
-          </h3>
+      {/* 4. PROCESS: How We Work (New Section) */}
+      <section className="py-32 px-6 bg-studio-gray">
+        <div className="max-w-7xl mx-auto">
+          <SectionTitle subtitle="How We Work" title="The Process" />
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mt-16">
+            <ProcessStep number="01" title="Discovery" desc="We meet (virtually or coffee) to understand your vision and vibe." />
+            <ProcessStep number="02" title="Planning" desc="Locations, timelines, and shot lists—we handle the details." />
+            <ProcessStep number="03" title="Capture" desc="We shoot unobtrusively, letting the day unfold naturally." />
+            <ProcessStep number="04" title="Delivery" desc="Hand-edited, high-res images delivered in a beautiful online gallery." />
+          </div>
+        </div>
+      </section>
 
-          <div className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
-            {[
-              {
-                title: "Destination & Venue Selection",
-                img: "/service-venue.jpg",
-              },
-              {
-                title: "Logistics & Hospitality",
-                img: "/service-hospitality.jpg",
-              },
-              { title: "Decor Design & Production", img: "/service-decor.jpg" },
-              {
-                title: "Entertainment & Artists",
-                img: "/service-entertainment.jpg",
-              },
-            ].map((item, i) => (
-              <motion.article
-                key={i}
-                initial={{ opacity: 0, y: 12 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.4 }}
-                transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="rounded-xl overflow-hidden bg-white shadow-sm border border-black/10"
-              >
-                <div className="aspect-[4/3] bg-gray-100">
-                  <img
-                    src={item.img}
-                    alt={item.title}
-                    className="h-full w-full object-cover"
-                  />
+      {/* 5. SERVICES: Curated Experiences (3 Stages with Images) */}
+      <section className="py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <SectionTitle subtitle="What we do" title="Curated Experiences" />
+
+          <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <ServiceItem
+              number="01"
+              title="Wedding Photography"
+              desc="Complete coverage of your big day, from the haldi to the vidaai. We are everywhere, yet invisible."
+              img="https://images.unsplash.com/photo-1511285560982-1351cdeb9821?auto=format&fit=crop&q=80&w=1974"
+            />
+            <ServiceItem
+              number="02"
+              title="Cinematic Films"
+              desc="4K cinematic storytelling that feels less like a wedding video and more like a feature film."
+              img="https://images.unsplash.com/photo-1518135714426-c18f5ffb6f4d?auto=format&fit=crop&q=80&w=1996"
+            />
+            <ServiceItem
+              number="03"
+              title="Destination Planning"
+              desc="From Jaipur palaces to Goa beaches, we handle logistics while you handle the fun."
+              img="https://images.unsplash.com/photo-1469334031218-e382a71b716b?auto=format&fit=crop&q=80&w=2070"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 6. LOVE NOTES (Testimonials) (Auto Slider) */}
+      <TestimonialsSlider />
+
+      {/* 7. CTA: Large Footer Link (Animated) */}
+      <section className="py-40 text-center overflow-hidden relative border-t border-[var(--border-color)]">
+        <motion.div
+          animate={{ scale: [1, 1.05, 1] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+          className="relative z-10"
+        >
+          <h2 className="font-serif text-6xl md:text-9xl text-studio-white/50 hover:text-studio-white transition-colors duration-500 cursor-pointer">
+            <a href="/contact">Let's Create.</a>
+          </h2>
+        </motion.div>
+      </section>
+    </div>
+  );
+}
+
+/* --- Components --- */
+
+function TestimonialsSlider() {
+  const testimonials = [
+    {
+      id: 1,
+      text: "Sanjay and his team were absolute magic. They felt like friends with cameras. The photos are better than we could have ever imagined.",
+      name: "Riya & Aryan",
+      location: "Udaipur, 2024",
+      img: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150"
+    },
+    {
+      id: 2,
+      text: "The most seamless experience of our wedding. They captured moments we didn't even know happened. Pure art.",
+      name: "Neha & Vikram",
+      location: "Goa, 2023",
+      img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150"
+    },
+    {
+      id: 3,
+      text: "Cinematic, emotional, and timeless. Looking at our album feels like reliving the day all over again.",
+      name: "Sarah & Mike",
+      location: "Mumbai, 2024",
+      img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=150"
+    }
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % testimonials.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  return (
+    <section className="py-32 px-6 bg-studio-gray overflow-hidden">
+      <div className="max-w-4xl mx-auto text-center relative min-h-[400px] flex flex-col items-center">
+        <span className="text-xs uppercase tracking-[0.2em] text-studio-accent mb-12 block">Love Notes</span>
+
+        {/* CSS Grid for Stacking - Fixes Absolute Positioning Issues */}
+        <div className="relative w-full grid grid-cols-1 grid-rows-1">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 1.05 }}
+              transition={{ duration: 0.5 }}
+              className="col-start-1 row-start-1"
+            >
+              <h2 className="font-serif text-2xl md:text-5xl text-studio-white italic leading-relaxed mb-12">
+                "{testimonials[index].text}"
+              </h2>
+              <div className="flex flex-col items-center">
+                <div className="h-16 w-16 bg-studio-accent rounded-full mb-4 overflow-hidden border-2 border-studio-accent">
+                  <img src={testimonials[index].img} alt={testimonials[index].name} className="w-full h-full object-cover" />
                 </div>
-                <div className="p-5 text-center">
-                  <h4 className="brand-serif text-[20px] font-semibold text-emerald-900">
-                    {item.title}
-                  </h4>
-                  <p className="mt-2 text-[15px] text-gray-700/90">
-                    Curated with care—tailored to your vision.
-                  </p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================= */}
-      {/* NEW: How it works (5 simple steps)        */}
-      {/* ========================================= */}
-      <section className="px-4 py-16" style={{ backgroundColor: "#f8efee" }}>
-        <div className="mx-auto max-w-6xl">
-          <motion.h3
-            {...fadeUp()}
-            className="brand-serif text-center text-[30px] md:text-[36px] font-semibold text-emerald-900"
-          >
-            How it works
-          </motion.h3>
-          <p className="text-center text-sm text-gray-600 mt-1">
-            5 simple steps for a stress-free wedding
-          </p>
-
-          <div className="mt-10 rounded-2xl border border-black/10 bg-white p-4 sm:p-6 md:p-8">
-            <ol className="grid gap-8 md:grid-cols-5">
-              {[
-                {
-                  title: "Speak to Us",
-                  desc: "Tell us your dream wedding vision.",
-                  Icon: ChatBubbleIcon,
-                },
-                {
-                  title: "See the Options",
-                  desc: "Explore tailored venue & service choices.",
-                  Icon: CompassIcon,
-                },
-                {
-                  title: "Get Custom Packages",
-                  desc: "Personalized plans, just for you.",
-                  Icon: PackageIcon,
-                },
-                {
-                  title: "Book Us",
-                  desc: "Lock in your perfect wedding team.",
-                  Icon: HandshakeIcon,
-                },
-                {
-                  title: "Relax",
-                  desc: "We handle the details while you enjoy your big day!",
-                  Icon: PalmIcon,
-                },
-              ].map(({ title, desc, Icon }, i) => (
-                <motion.li
-                  key={title}
-                  {...fadeUp(i * 0.05)}
-                  className="flex flex-col items-center text-center"
-                >
-                  <div className="grid place-items-center h-16 w-16 rounded-2xl bg-emerald-50 border border-emerald-200">
-                    <Icon className="h-8 w-8 text-emerald-700" />
-                  </div>
-                  <h4 className="mt-3 font-semibold text-emerald-900">
-                    {title}
-                  </h4>
-                  <p className="mt-1 text-[14px] text-gray-700/90 max-w-[18ch]">
-                    {desc}
-                  </p>
-                </motion.li>
-              ))}
-            </ol>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================= */}
-      {/* NEW: Our Love Filled Locations             */}
-      {/* ========================================= */}
-      <section className="px-4 py-16" style={{ backgroundColor: "#f8efee" }}>
-        <div className="mx-auto max-w-6xl">
-          <motion.h3
-            {...fadeUp()}
-            className="brand-serif text-center text-3xl md:text-[36px] font-semibold text-emerald-900"
-          >
-            Our Love Filled Locations
-          </motion.h3>
-
-          <div className="mt-8 rounded-2xl bg-white border border-black/10 p-5 md:p-8 grid md:grid-cols-2 gap-6">
-            {/* Map/illustration */}
-            <motion.div
-              {...fadeUp(0.05)}
-              className="rounded-xl border border-black/10 bg-rose-50 p-4"
-            >
-              {/* swap this for your detailed SVG/map image */}
-              <img
-                src="/map-india.svg"
-                alt="Map of India highlighting our wedding locations"
-                className="w-full h-auto"
-              />
-              <p className="sr-only">
-                Key cities we cover across India with destination wedding
-                planning.
-              </p>
-            </motion.div>
-
-            {/* Copy */}
-            <motion.div
-              {...fadeUp(0.1)}
-              className="text-[15px] leading-7 text-gray-800/90"
-            >
-              <p>
-                From the serene backwaters of Kerala to the majestic palaces of
-                Rajasthan, Snjay Studio has had the privilege of planning
-                weddings in some of India’s most breathtaking locations. Each
-                venue holds its own unique charm and heritage—providing the
-                perfect backdrop for couples to exchange vows and begin their
-                journey together.
-              </p>
-
-              <p className="mt-4">
-                Whether it’s the vibrant colors of a traditional South Indian
-                wedding or the regal opulence of a Northern extravaganza, we
-                bring our expertise and passion to every celebration—embracing
-                the rich tapestry of cultures, traditions, and landscapes that
-                make India a land of love stories waiting to be told.
-              </p>
-
-              {/* quick pill list of popular cities */}
-              <ul className="mt-5 flex flex-wrap gap-2">
-                {[
-                  "Jaipur",
-                  "Udaipur",
-                  "Jodhpur",
-                  "Kerala",
-                  "Goa",
-                  "Mumbai",
-                  "Ranchi",
-                  "Kolkata",
-                  "Delhi NCR",
-                  "Hyderabad",
-                ].map((city) => (
-                  <li
-                    key={city}
-                    className="text-sm bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 rounded-full"
-                  >
-                    {city}
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ========================================= */}
-      {/* NEW: Our Approach                          */}
-      {/* ========================================= */}
-      <section className="px-4 py-16" style={{ backgroundColor: "#f8efee" }}>
-        <div className="mx-auto max-w-6xl">
-          <motion.h3
-            {...fadeUp()}
-            className="brand-serif text-center text-3xl md:text-[36px] font-semibold"
-          >
-            <span className="text-emerald-800">Our </span>
-            <span className="text-[#5e2b97]">Approach</span>
-          </motion.h3>
-
-          <div className="mt-8 grid gap-8 lg:grid-cols-[1.2fr_1fr]">
-            {/* Left: bullets */}
-            <motion.div
-              {...fadeUp(0.05)}
-              className="rounded-2xl bg-white border border-black/10 p-6 md:p-8"
-            >
-              <p className="text-gray-800/90">
-                At Snjay Studio, we don’t just plan events—we craft experiences
-                that are immersive, personal, and unforgettable.
-              </p>
-
-              <ul className="mt-5 space-y-4 text-[15px] leading-7 text-gray-800/90">
-                <li>
-                  <strong className="text-emerald-900">Personalisation</strong>{" "}
-                  — Every couple is unique, and so is every wedding we create.
-                  We design experiences that reflect your love story,
-                  traditions, and style.
-                </li>
-                <li>
-                  <strong className="text-emerald-900">
-                    Attention to Detail
-                  </strong>{" "}
-                  — From the grandest stage setup to the tiniest floral
-                  arrangement, we leave no stone unturned.
-                </li>
-                <li>
-                  <strong className="text-emerald-900">
-                    Seamless Execution
-                  </strong>{" "}
-                  — Blending creativity with flawless coordination so every
-                  moment flows effortlessly.
-                </li>
-                <li>
-                  <strong className="text-emerald-900">
-                    Innovative Experiences
-                  </strong>{" "}
-                  — Themed cocktails, celebrity performances, surprise entries,
-                  and more—fresh ideas your guests will talk about for years.
-                </li>
-              </ul>
-
-              <div className="mt-6">
-                <a
-                  href="/contact"
-                  className="inline-flex items-center justify-center rounded-full px-6 py-3 text-white font-semibold shadow-sm bg-emerald-700 hover:bg-emerald-800"
-                >
-                  Get In Touch
-                </a>
+                <span className="text-sm font-bold uppercase tracking-widest text-studio-white">{testimonials[index].name}</span>
+                <span className="text-xs text-studio-white/50 mt-1">{testimonials[index].location}</span>
               </div>
             </motion.div>
-
-            {/* Right: stacked images like the reference */}
-            <motion.div {...fadeUp(0.1)} className="grid gap-5">
-              <div className="rounded-xl overflow-hidden border border-black/10 bg-white">
-                <img
-                  src="/approach-couple-1.jpg"
-                  alt="Couple at their wedding ceremony"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <div className="grid grid-cols-2 gap-5">
-                <div className="rounded-xl overflow-hidden border border-black/10 bg-white">
-                  <img
-                    src="/approach-couple-2.jpg"
-                    alt="Traditional ritual moment"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="rounded-xl overflow-hidden border border-black/10 bg-white">
-                  <img
-                    src="/approach-couple-3.jpg"
-                    alt="Joyful candid of bride and groom"
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
+          </AnimatePresence>
         </div>
-      </section>
 
-      {/* ========================================= */}
-      {/* NEW: Recent Events                        */}
-      {/* ========================================= */}
-      <section className="px-4 py-16" style={{ backgroundColor: "#f8efee" }}>
-        <div className="mx-auto max-w-6xl">
-          <motion.h3
-            {...fadeUp()}
-            className="brand-serif text-center text-3xl md:text-[36px] font-semibold text-emerald-900"
-          >
-            Recent Events
-          </motion.h3>
-
-          {/* grid */}
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {/* simple cards */}
-            {[
-              { title: "Rutuja and Dhruv", img: "/events/event-1.jpg" },
-              { title: "Mugdha and Kshitij", img: "/events/event-2.jpg" },
-              { title: "Shrushti and Kunal", img: "/events/event-3.jpg" },
-              { title: "Avantika and Rohan", img: "/events/event-4.jpg" },
-              { title: "Neesha and Pratik", img: "/events/event-5.jpg" },
-              { title: "Cindy and Ayush", img: "/events/event-6.jpg" },
-              { title: "Amrita and Vihang", img: "/events/event-7.jpg" },
-            ].map(() => (
-              <motion.article {...fadeUp(0.25)} className="lg:row-span-2 group">
-                {/* WHITE PANEL to visually separate the image area */}
-                <div>
-                  {/* image with its own rounding */}
-                  <div className="aspect-[4/5] lg:h-full rounded-lg overflow-hidden bg-gray-100">
-                    <img
-                      src="/events/event-featured.jpg"
-                      alt="Sayli and Aniket"
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-
-                  {/* IN FO CARD — centered & in normal flow, pulled UP to overlap the image */}
-                  <div
-                    className="
-        relative mx-auto w-[83%] max-w-[360px]
-        -translate-y-[60%] 
-        transition-transform duration-500 ease-out
-      "
-                  >
-                    {/* the card that 'grows DOWN' */}
-                    <div
-                      className="
-          relative rounded-lg bg-white border border-black/10 overflow-hidden
-          transition-[max-height] duration-500 ease-out
-          max-h-[54px] group-hover:max-h-[260px]
-        "
-                    >
-                      {/* header (always visible) */}
-                      <div className="p-4 text-center">
-                        <p className="font-semibold text-emerald-900 text-sm">
-                          Sayli and Aniket
-                        </p>
-                      </div>
-
-                      {/* extra details (revealed on hover; grows downward) */}
-                      <div className="px-4 pb-4 pt-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                        <div className="mt-1 text-[13px] text-gray-700/90 space-y-1">
-                          <p className="mt-1 text-[13px] text-gray-700/90">
-                            Magical destination celebration
-                          </p>
-                          <p>
-                            <span className="font-semibold">Wedding Date:</span>{" "}
-                            13th March 2022
-                          </p>
-                          <p>
-                            <span className="font-semibold">Venue:</span> Malhar
-                            Machi
-                          </p>
-                          <p>
-                            <span className="font-semibold">Services:</span>{" "}
-                            Decor, Logistics, Cinematic Film
-                          </p>
-                        </div>
-                        <a
-                          href="/gallery/sayli-aniket"
-                          className="mt-3 inline-flex text-[13px] font-semibold text-[#6c1d86] hover:underline"
-                        >
-                          View full story →
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+        {/* Indicators */}
+        <div className="flex gap-3 mt-12">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setIndex(i)}
+              className={`h-1.5 rounded-full transition-all duration-300 ${i === index ? "w-8 bg-studio-accent" : "w-1.5 bg-studio-white/20 hover:bg-studio-white/50"}`}
+            />
+          ))}
         </div>
-      </section>
-
-      {/* ========================================= */}
-      {/* NEW: See What Our Customers Say About Us  */}
-      {/* ========================================= */}
-      <section className="px-4 py-16" style={{ backgroundColor: "#f8efee" }}>
-        <div className="mx-auto max-w-6xl">
-          <motion.h3
-            {...fadeUp()}
-            className="brand-serif text-center text-3xl md:text-[36px] font-semibold text-emerald-900"
-          >
-            See What Our Customers Say About Us
-          </motion.h3>
-
-          <div className="mt-10 grid gap-8 md:grid-cols-[1.2fr_0.8fr] items-center">
-            {/* quote card */}
-            <motion.div {...fadeUp(0.05)} className="relative">
-              {/* subtle right rail like screenshot */}
-              <div className="absolute top-3 right-0 h-[92%] w-2 rounded bg-rose-100" />
-              <div className="relative rounded-2xl bg-white border border-black/10 p-6 md:p-7 shadow-sm">
-                {/* stars */}
-                <div className="flex items-center gap-1">
-                  {[...Array(4)].map((_, i) => (
-                    <StarIcon key={i} className="h-4 w-4 text-[#6c1d86]" />
-                  ))}
-                  <StarIcon className="h-4 w-4 text-[#6c1d86]" half />
-                </div>
-
-                <p className="mt-4 text-[13.5px] font-semibold text-gray-700/90">
-                  Highly Professional &amp; Supportive
-                </p>
-                <p className="mt-2 text-[14px] leading-7 text-gray-700/90">
-                  The team was always available, super professional, and handled
-                  last-minute changes smoothly. We felt truly supported
-                  throughout the process.
-                </p>
-
-                {/* avatar + name */}
-                <div className="mt-5 flex items-center gap-3">
-                  <img
-                    src="/testimonials/avantika-rohan.jpg"
-                    alt="Avantika and Rohan"
-                    className="h-10 w-10 rounded-full object-cover"
-                  />
-                  <div className="text-[13px]">
-                    <p className="font-semibold text-emerald-900">
-                      Avantika and Rohan
-                    </p>
-                  </div>
-                </div>
-
-                {/* quote mark bottom-right */}
-                <QuotationIcon className="absolute bottom-4 right-5 h-7 w-7 text-emerald-700/50" />
-              </div>
-            </motion.div>
-
-            {/* supporting portrait image */}
-            <motion.div
-              {...fadeUp(0.1)}
-              className="rounded-xl overflow-hidden border border-black/10 bg-white"
-            >
-              <img
-                src="/testimonials/supporting-portrait.jpg"
-                alt="Happy bride testimonial"
-                className="w-full h-full object-cover"
-              />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
-/* --------------------------
-   Minimal inline icons (no deps)
---------------------------- */
+function Stats({ number, label }) {
+  return (
+    <div className="text-center">
+      <span className="block font-serif text-3xl text-studio-accent">{number}</span>
+      <span className="text-[10px] uppercase tracking-widest text-studio-white/40">{label}</span>
+    </div>
+  );
+}
 
-function ChatBubbleIcon(props) {
+function PortfolioCard({ src, title, category, aspectRatio = "aspect-[4/5]" }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M4 14.5A7.5 7.5 0 0 1 11.5 7h1A7.5 7.5 0 0 1 20 14.5c0 3.59-2.91 6.5-6.5 6.5H9l-5 2 1.2-3.8A6.5 6.5 0 0 1 4 14.5Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <circle cx="10" cy="12" r="1" fill="currentColor" />
-      <circle cx="14" cy="12" r="1" fill="currentColor" />
-    </svg>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      className="group relative overflow-hidden cursor-pointer"
+    >
+      <div className={`${aspectRatio} overflow-hidden bg-studio-gray`}>
+        <motion.img
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.7 }}
+          src={src}
+          alt={title}
+          className="h-full w-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+        />
+      </div>
+      <div className="absolute bottom-4 left-4 z-20">
+        <p className="text-[10px] uppercase tracking-widest text-studio-accent mb-1 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">{category}</p>
+        <h3 className="font-serif text-2xl text-white italic drop-shadow-md">{title}</h3>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-60" />
+    </motion.div>
   );
 }
-function CompassIcon(props) {
+
+function ServiceItem({ number, title, desc, img }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" />
-      <path
-        d="m15 9-3.2 1.2L10.6 13 9 15l2-1.6 2.8-1.2L15 9Z"
-        fill="currentColor"
-      />
-    </svg>
+    <div className="group border-t border-[var(--border-color)] pt-8 hover:border-studio-accent transition-colors duration-300">
+      {/* Image Stage */}
+      <div className="w-full h-64 mb-6 overflow-hidden bg-studio-gray relative">
+        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500 z-10" />
+        <img
+          src={img}
+          alt={title}
+          className="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+        />
+      </div>
+      <span className="text-xs text-studio-white/30 font-mono mb-4 block group-hover:text-studio-accent">{number}</span>
+      <h3 className="font-serif text-3xl text-studio-white mb-4 group-hover:translate-x-2 transition-transform duration-300">{title}</h3>
+      <p className="text-sm text-studio-white/50 leading-relaxed">{desc}</p>
+    </div>
   );
 }
-function PackageIcon(props) {
+
+function SectionTitle({ subtitle, title }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M4 7.5 12 3l8 4.5v9L12 21l-8-4.5v-9Z"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M12 21V12M4 7.5l8 4.5 8-4.5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-      />
-    </svg>
+    <div className="mb-8">
+      <span className="block text-xs uppercase tracking-[0.2em] text-studio-accent mb-2">{subtitle}</span>
+      <h2 className="font-serif text-5xl md:text-6xl text-studio-white">{title}</h2>
+    </div>
   );
 }
-function HandshakeIcon(props) {
+
+function ProcessStep({ number, title, desc }) {
   return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M8 13 6 11l5-4 3 2 4-3 2 3-5 4-2-1-2 2-1-1"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M5 12 3 9m16 1 2 2"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-function PalmIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M6 20c2-6 3-9 6-9s4 3 6 9M9 9V4m3 4V3m3 6V5"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-      <path
-        d="M3 20h18"
-        stroke="currentColor"
-        strokeWidth="1.5"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
+    <div className="relative pl-8 border-l border-[var(--border-color)]">
+      <span className="absolute -left-[5px] top-0 h-2.5 w-2.5 bg-studio-accent rounded-full" />
+      <span className="text-xs text-studio-white/50 font-mono mb-2 block">{number}</span>
+      <h4 className="font-serif text-2xl text-studio-white mb-2">{title}</h4>
+      <p className="text-sm text-studio-white/60">{desc}</p>
+    </div>
+  )
 }

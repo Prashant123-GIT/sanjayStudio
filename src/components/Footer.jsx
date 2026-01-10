@@ -1,249 +1,84 @@
-// components/Footer.jsx
-import { motion } from "framer-motion";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#f8efee]">
-      {/* top content */}
-      <div className="mx-auto max-w-7xl px-4 pt-10 pb-24">
-        <div className="grid gap-10 md:grid-cols-12">
-          {/* Brand + Socials */}
-          <div className="md:col-span-4 flex flex-col items-center md:items-start text-center md:text-left">
-            {/* LOGO */}
-            <img
-              src="/logo-hitched.svg"
-              alt="Snjay Studio"
-              className="h-14 w-auto"
-            />
+    <footer className="relative bg-studio-black border-t border-studio-white/10 pt-20 pb-10 transition-colors duration-300">
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="grid gap-12 md:grid-cols-12 mb-20">
 
-            {/* Socials */}
-            <div className="mt-6 flex items-center gap-4">
-              <SocialIcon
-                label="Facebook"
-                href="https://facebook.com/yourpage"
-                bg="bg-[#3b5998]"
-                icon={<FacebookIcon className="h-4 w-4 text-white" />}
-              />
-              <SocialIcon
-                label="Instagram"
-                href="https://instagram.com/yourpage"
-                bg="bg-[#6c1d86]"
-                icon={<InstagramIcon className="h-4 w-4 text-white" />}
-              />
-              <SocialIcon
-                label="WhatsApp"
-                href="https://wa.me/0000000000"
-                bg="bg-[#25D366]"
-                icon={<WhatsappIcon className="h-4 w-4 text-white" />}
-              />
+          {/* Brand */}
+          <div className="md:col-span-5">
+            <h3 className="font-serif text-3xl text-studio-white mb-6">Sanjay Studio</h3>
+            <p className="text-studio-white/60 text-sm leading-relaxed max-w-sm">
+              Capturing the raw, unscripted beauty of human connection. Based in Ranchi, available worldwide for weddings and editorial commissions.
+            </p>
+            <div className="mt-8 flex gap-6">
+              <SocialLink href="#" label="Instagram" icon={<InstagramIcon />} />
+              <SocialLink href="#" label="Facebook" icon={<FacebookIcon />} />
+              <SocialLink href="#" label="YouTube" icon={<YouTubeIcon />} />
             </div>
           </div>
 
-          {/* Address */}
-          <div className="md:col-span-3">
-            <h4 className="text-[20px] font-semibold text-emerald-800">
-              Address
-            </h4>
-            <p className="mt-3 text-[15px] leading-7 text-gray-800/90">
-              Ratu Kathitand, 
-              <br />
-              Ranchi, Jharkhand – 835222
-            </p>
-          </div>
-
-          {/* Services */}
-          <div className="md:col-span-2">
-            <h4 className="text-[20px] font-semibold text-emerald-800">
-              Services
-            </h4>
-            <ul className="mt-3 space-y-1 text-[15px]">
-              <li>
-                <a
-                  href="/services/pre-wedding"
-                  className="text-emerald-900 hover:underline"
-                >
-                  Pre-Wedding
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services/wedding"
-                  className="text-emerald-900 hover:underline"
-                >
-                  Wedding
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/services/reception"
-                  className="text-emerald-900 hover:underline"
-                >
-                  Reception
-                </a>
-              </li>
+          {/* Navigation */}
+          <div className="md:col-span-3 md:col-start-7">
+            <h4 className="text-xs font-medium uppercase tracking-widest text-studio-accent mb-6">Explore</h4>
+            <ul className="space-y-4">
+              <FooterLink href="/" label="Home" />
+              <FooterLink href="/portfolio" label="Portfolio" />
+              <FooterLink href="/services" label="Services" />
+              <FooterLink href="/about" label="About Us" />
             </ul>
           </div>
 
           {/* Contact */}
           <div className="md:col-span-3">
-            <h4 className="text-[20px] font-semibold text-emerald-800">
-              Contact
-            </h4>
-            <ul className="mt-3 space-y-2 text-[15px] text-gray-900">
-              <li className="flex items-center gap-2">
-                <PhoneIcon className="h-4 w-4 text-emerald-800" />
-                <a href="tel:+9199999999999" className="hover:underline">
-                  +91 99999999999
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <PhoneIcon className="h-4 w-4 text-emerald-800" />
-                <a href="tel:+9199999999999" className="hover:underline">
-                  +91 99999999999
-                </a>
-              </li>
-              <li className="flex items-center gap-2">
-                <MailIcon className="h-4 w-4 text-[#6c1d86]" />
-                <a
-                  href="mailto:connect@example.com"
-                  className="hover:underline"
-                >
-                  {/* connect@hitchedindia.com */}
-                  connect@example.com
-                </a>
+            <h4 className="text-xs font-medium uppercase tracking-widest text-studio-accent mb-6">Inquiries</h4>
+            <ul className="space-y-4 text-sm text-studio-white/60">
+              <li><a href="mailto:hello@sanjaystudio.com" className="hover:text-studio-white transition-colors">hello@sanjaystudio.com</a></li>
+              <li>+91 987 654 3210</li>
+              <li className="pt-4">
+                Ratu Kathitand,<br />Ranchi, Jharkhand – 835222
               </li>
             </ul>
           </div>
         </div>
 
-        <p className="mt-10 text-center text-[15px] text-gray-900">
-          Copyright @ example.com
-        </p>
-      </div>
-
-      {/* WAVES background (bottom) */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0">
-        {/* WAVES – full-width, no gaps, layered */}
-        <div className="relative overflow-hidden">
-          <svg
-            className="block w-full h-[120px] md:h-[160px]"
-            viewBox="0 0 1440 200"
-            preserveAspectRatio="none"
-            aria-hidden="true"
-          >
-            {/* Bottom layer (deepest) */}
-            <path
-              d="M0 120
-         C 240 80, 480 80, 720 120
-         C 960 160, 1200 150, 1440 120
-         V 200 H 0 Z"
-              fill="#8d758d"
-              opacity="1"
-            />
-
-            {/* Layer 2 */}
-            <path
-              d="M0 110
-         C 240 70, 480 70, 720 110
-         C 960 150, 1200 135, 1440 110
-         V 200 H 0 Z"
-              fill="#a08aa0"
-              opacity="0.85"
-            />
-
-            {/* Layer 3 */}
-            <path
-              d="M0 100
-         C 240 60, 480 60, 720 100
-         C 960 140, 1200 125, 1440 100
-         V 200 H 0 Z"
-              fill="#b69fb1"
-              opacity="0.65"
-            />
-
-            {/* Top layer (lightest) */}
-            <path
-              d="M0 90
-         C 240 50, 480 50, 720 90
-         C 960 130, 1200 115, 1440 90
-         V 200 H 0 Z"
-              fill="#d3c0cc"
-              opacity="0.35"
-            />
-          </svg>
+        {/* Bottom Bar */}
+        <div className="border-t border-studio-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-studio-white/30 uppercase tracking-wider">
+          <p>&copy; {new Date().getFullYear()} Sanjay Studio. All rights reserved.</p>
+          <p>Designed with Intent.</p>
         </div>
       </div>
-
-      {/* WhatsApp FAB (bottom-right) */}
-      <a
-        href="https://wa.me/0000000000"
-        target="_blank"
-        rel="noreferrer"
-        className="group fixed right-5 bottom-6 z-30 grid h-14 w-14 place-items-center rounded-full bg-[#25D366] shadow-[0_8px_28px_rgba(0,0,0,0.25)] hover:brightness-95"
-        aria-label="Chat on WhatsApp"
-      >
-        <WhatsappIcon className="h-7 w-7 text-white transition-transform duration-200 group-hover:scale-110" />
-      </a>
     </footer>
   );
 }
 
-/* ---------- tiny helpers ---------- */
-
-function SocialIcon({ href, label, bg, icon }) {
+function SocialLink({ href, label, icon }) {
   return (
-    <a
-      href={href}
-      target="_blank"
-      rel="noreferrer"
-      aria-label={label}
-      className={`grid h-10 w-10 place-items-center rounded-full ${bg} shadow-md hover:opacity-95 active:scale-[0.98]`}
-    >
-      {icon}
+    <a href={href} className="group flex items-center gap-2 text-xs uppercase tracking-widest text-studio-white/50 hover:text-studio-accent transition-colors">
+      <span className="group-hover:-translate-y-1 transition-transform duration-300">{icon}</span>
+      <span>{label}</span>
     </a>
   );
 }
 
-/* ---------- icons (inline, no deps) ---------- */
+function InstagramIcon() {
+  return <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5" strokeWidth="1.5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" strokeWidth="1.5" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" strokeWidth="2" strokeLinecap="round" /></svg>;
+}
 
-function FacebookIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M13.5 9H15V6h-1.5C11.6 6 11 7.6 11 9v2H9v3h2v7h3v-7h2.1l.4-3H14V9.5c0-.3.2-.5.5-.5Z" />
-    </svg>
-  );
+function FacebookIcon() {
+  return <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>;
 }
-function InstagramIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M7 3h10a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V7a4 4 0 0 1 4-4Zm0 2a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H7Zm5 3.5A4.5 4.5 0 1 1 7.5 13 4.5 4.5 0 0 1 12 8.5Zm0 2A2.5 2.5 0 1 0 14.5 13 2.5 2.5 0 0 0 12 10.5ZM17.5 7a1 1 0 1 1-1 1 1 1 0 0 1 1-1Z" />
-    </svg>
-  );
+
+function YouTubeIcon() {
+  return <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor" stroke="none" /></svg>;
 }
-function WhatsappIcon(props) {
+
+function FooterLink({ href, label }) {
   return (
-    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true" {...props}>
-      <path d="M19.1 16.9c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.2-.2.3-.8.9-.9 1-.2.1-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.4-.8-.7-1.4-1.6-1.5-1.9-.2-.3 0-.4.1-.6.1-.1.3-.4.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5 0-.1-.7-1.6-1-2.2-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.2.2-.9.9-.9 2.2s1 2.6 1.1 2.8c.1.2 2.1 3.2 5 4.4.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.3.2-.6.2-1.1.2-1.2-.1 0-.3-.1-.6-.2Z" />
-      <path d="M27 15.5c0 6.2-5 11.2-11.2 11.2-2 0-3.9-.5-5.5-1.5l-3.8 1 1-3.7c-1.2-1.8-1.9-3.9-1.9-6 0-6.2 5-11.2 11.2-11.2S27 9.3 27 15.5Zm-2 0c0-5.1-4.1-9.2-9.2-9.2S6.6 10.4 6.6 15.5c0 2 .6 3.9 1.7 5.5l-.9 3.3 3.4-.9c1.5 1 3.2 1.5 5 1.5 5.1 0 9.2-4.1 9.2-9.2Z" />
-    </svg>
-  );
-}
-function PhoneIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path
-        d="M4 5.5 8.5 4l2 4-2 2a13 13 0 0 0 5.5 5.5l2-2 4 2L18.5 20c-6 1-14.5-7.5-13-14.5Z"
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-    </svg>
-  );
-}
-function MailIcon(props) {
-  return (
-    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true" {...props}>
-      <path d="M4 6h16v12H4z" stroke="currentColor" strokeWidth="1.5" />
-      <path d="m4 7 8 6 8-6" stroke="currentColor" strokeWidth="1.5" />
-    </svg>
+    <li>
+      <a href={href} className="text-sm text-studio-white/60 hover:text-studio-white transition-colors">
+        {label}
+      </a>
+    </li>
   );
 }

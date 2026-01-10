@@ -1,132 +1,98 @@
 // pages/Services.jsx
 import { motion } from "framer-motion";
-import AnimatedBox from "../components/AnimatedBox.jsx";
-
-const fadeUp = (delay = 0) => ({
-  initial: { opacity: 0, y: 14 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, amount: 0.5 },
-  transition: { duration: 0.55, delay },
-});
-const hoverLift = { whileHover: { y: -4, scale: 1.01, transition: { duration: 0.2 } } };
 
 export default function Services() {
-  const services = [
-    { title: "Wedding Photography", desc: "Full-day coverage, candid & traditional." },
-    { title: "Cinematic Wedding Films", desc: "Highlight films, teasers, full edits." },
-    { title: "Pre-Wedding Shoots", desc: "Story-driven concepts at beautiful locations." },
-    { title: "Birthday / Events", desc: "Candid, documentary-style coverage." },
-    { title: "Drone Add-on", desc: "Aerial views where permitted." },
-    { title: "Photo Albums", desc: "Premium layouts & archival prints." },
-  ];
-
   return (
-    <div className="bg-[#f8efee]">
-      {/* Hero */}
-      <div className="relative h-[38vh] min-h-[260px] w-full overflow-hidden">
-        <img
-          src="/services/hero.jpg"
-          alt="Services hero"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 flex h-full items-center justify-center px-4">
-          <motion.h1
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.65 }}
-            className="brand-serif text-white text-4xl md:text-5xl font-semibold drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]"
-          >
-            Services
-          </motion.h1>
+    <div className="bg-studio-black text-studio-white min-h-screen pt-32 pb-20 px-6 transition-colors duration-300">
+      <div className="max-w-7xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="mb-20 text-center"
+        >
+          <span className="text-xs font-sans tracking-[0.3em] uppercase text-studio-accent mb-4 block">Our Expertise</span>
+          <h1 className="font-serif text-6xl md:text-8xl text-studio-white mb-6">Curated Services</h1>
+          <div className="h-[1px] w-24 bg-studio-white/10 mx-auto" />
+        </motion.div>
+
+        <div className="space-y-32">
+          <ServiceBlock
+            title="Wedding Photography"
+            desc="Documenting your love story with an editorial eye. We capture the raw emotions, the candid laughter, and the silent tears that make your day unique."
+            features={["Full Day Coverage", "Second Shooter", "High-Res Edited Images", "Online Gallery"]}
+            img="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070"
+            align="left"
+            price="Starting at ₹50,000"
+          />
+
+          <ServiceBlock
+            title="Cinematography"
+            desc="Cinema-grade 4K films that tell your story. We don't just record events; we weave a narrative that looks and feels like a feature film."
+            features={["4K Highlights Film", "Full Ceremony Film", "Drone Coverage", "Teaser Trailer"]}
+            img="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&q=80&w=1888"
+            align="right"
+            price="Starting at ₹75,000"
+          />
+
+          <ServiceBlock
+            title="Destination Management"
+            desc="From scouting the perfect venue to handling logistics for hundreds of guests, we ensure your destination wedding is flawless."
+            features={["Venue Scouting", "Guest Hospitality", "Vendor Coordination", "Transport Logistics"]}
+            img="https://images.unsplash.com/photo-1544979590-37e9b47cd7bc?auto=format&fit=crop&q=80&w=1954"
+            align="left"
+            price="Custom Quote"
+          />
         </div>
       </div>
+    </div>
+  );
+}
 
-      {/* Body */}
-      <div className="mx-auto max-w-6xl px-4 py-12 md:py-16">
-        <motion.p
-          {...fadeUp(0)}
-          className="mx-auto max-w-3xl text-[17px] leading-7 text-gray-800/90 text-center"
-        >
-          From intimate ceremonies to grand celebrations, we craft photo &amp; film experiences
-          that feel personal, elegant, and timeless.
-        </motion.p>
+function ServiceBlock({ title, desc, features, img, align, price }) {
+  const isRight = align === "right";
 
-        {/* Cards */}
-        <motion.ul
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.25 }}
-          className="mt-10 grid md:grid-cols-2 gap-8"
-        >
-          {services.map((s, i) => (
-            <motion.li
-              key={s.title}
-              variants={{
-                hidden: { opacity: 0, y: 14 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.05 } },
-              }}
-              className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm"
-              {...hoverLift}
-            >
-              <div className="flex items-start justify-between gap-4">
-                <h3 className="brand-serif text-xl font-semibold text-emerald-900">{s.title}</h3>
-                <span className="shrink-0 rounded-full border border-emerald-200 bg-emerald-50 px-3 py-1 text-xs text-emerald-800">
-                  Popular
-                </span>
-              </div>
-              <p className="mt-2 text-[15px] leading-7 text-gray-700/90">{s.desc}</p>
+  return (
+    <div className={`flex flex-col md:flex-row gap-12 md:gap-20 items-center ${isRight ? "md:flex-row-reverse" : ""}`}>
+      {/* Image Side */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="w-full md:w-1/2"
+      >
+        <div className="aspect-[4/5] overflow-hidden bg-studio-gray relative group">
+          <img src={img} alt={title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-90 group-hover:opacity-100" />
+          <div className="absolute inset-0 border border-white/5 pointer-events-none" />
+        </div>
+      </motion.div>
 
-              <div className="mt-4 rounded-xl overflow-hidden border border-black/10 bg-gray-50">
-                {/* Replace AnimatedBox with a real image if you have one */}
-                {/* <img src="/services/wedding-photo.jpg" alt={s.title} className="h-40 w-full object-cover" /> */}
-                <AnimatedBox h="h-40" />
-              </div>
+      {/* Content Side */}
+      <motion.div
+        initial={{ opacity: 0, x: isRight ? -50 : 50 }}
+        whileInView={{ opacity: 1, x: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7, delay: 0.2 }}
+        className="w-full md:w-1/2"
+      >
+        <h2 className="font-serif text-5xl md:text-6xl text-studio-white mb-6">{title}</h2>
+        <p className="text-studio-white/70 leading-relaxed mb-8 text-lg">{desc}</p>
 
-              <div className="mt-4 flex flex-wrap gap-2">
-                <span className="rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 text-xs">
-                  Consultation
-                </span>
-                <span className="rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 text-xs">
-                  On-ground Team
-                </span>
-                <span className="rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 px-3 py-1 text-xs">
-                  Edited Deliverables
-                </span>
-              </div>
-            </motion.li>
+        <ul className="mb-8 space-y-3">
+          {features.map((item, i) => (
+            <li key={i} className="flex items-center gap-3 text-sm font-medium tracking-wide uppercase text-studio-white/80">
+              <span className="w-1.5 h-1.5 bg-studio-accent rounded-full" />
+              {item}
+            </li>
           ))}
-        </motion.ul>
+        </ul>
 
-        {/* CTA strip */}
-        <motion.div
-          {...fadeUp(0.15)}
-          className="mt-12 rounded-2xl border border-black/10 bg-white p-6 md:p-8 text-center shadow-sm"
-        >
-          <h4 className="brand-serif text-2xl font-semibold text-emerald-900">
-            Ready to plan your photo &amp; film?
-          </h4>
-          <p className="mt-2 text-[15px] text-gray-700/90">
-            Share your dates and vision—we’ll create a custom package for you.
-          </p>
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-3">
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-white font-semibold shadow-sm bg-emerald-700 hover:bg-emerald-800 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-emerald-700"
-            >
-              Get Free Quote
-            </a>
-            <a
-              href="https://wa.me/0000000000"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center rounded-full px-6 py-3 text-white font-semibold shadow-sm bg-[#6c1d86] hover:opacity-95 active:scale-[0.99] focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#6c1d86]"
-            >
-              Chat with us
-            </a>
-          </div>
-        </motion.div>
-      </div>
+        <div className="flex items-center gap-6 pt-6 border-t border-[var(--border-color)]">
+          <span className="font-serif text-2xl text-studio-accent italic">{price}</span>
+          <a href="/contact" className="text-xs font-bold uppercase tracking-widest text-studio-white hover:text-studio-accent transition-colors">Book Now →</a>
+        </div>
+      </motion.div>
     </div>
   );
 }
