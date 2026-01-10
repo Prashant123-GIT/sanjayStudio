@@ -17,7 +17,7 @@ export default function App() {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen flex-col relative">
+    <div className="flex min-h-screen flex-col relative overflow-x-hidden max-w-full">
       <ScrollToTop />
       <Cursor />
       <CinematicBackground />
