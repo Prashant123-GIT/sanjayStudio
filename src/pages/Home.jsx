@@ -106,7 +106,7 @@ export default function Home() {
       {/* 4. PROCESS: How We Work (New Section) */}
       <section className="py-32 px-6 bg-studio-gray">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="How We Work" title="The Process" />
+          <SectionTitle subtitle="How We Work" title="The Process" icon="process" />
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mt-16">
             <ProcessStep number="01" title="Discovery" desc="We meet (virtually or coffee) to understand your vision and vibe." />
             <ProcessStep number="02" title="Planning" desc="Locations, timelines, and shot lists—we handle the details." />
@@ -119,7 +119,7 @@ export default function Home() {
       {/* 5. SERVICES: Curated Experiences (3 Stages with Images) */}
       <section className="py-32 px-6">
         <div className="max-w-7xl mx-auto">
-          <SectionTitle subtitle="What we do" title="Curated Experiences" />
+          <SectionTitle subtitle="What we do" title="Curated Experiences" icon="services" />
 
           <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
             <ServiceItem
@@ -298,11 +298,45 @@ function ServiceItem({ number, title, desc, img }) {
   );
 }
 
-function SectionTitle({ subtitle, title }) {
+function SectionTitle({ subtitle, title, icon }) {
+  // Icon mapping
+  const icons = {
+    process: (
+      <svg className="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M10.343 3.94c.09-.542.56-.94 1.11-.94h1.093c.55 0 1.02.398 1.11.94l.149.894c.07.424.384.764.78.93.398.164.855.142 1.205-.108l.737-.527a1.125 1.125 0 011.45.12l.773.774c.39.389.44 1.002.12 1.45l-.527.737c-.25.35-.272.806-.107 1.204.165.397.505.71.93.78l.893.15c.543.09.94.56.94 1.109v1.094c0 .55-.397 1.02-.94 1.11l-.893.149c-.425.07-.765.383-.93.78-.165.398-.143.854.107 1.204l.527.738c.32.447.269 1.06-.12 1.45l-.774.773a1.125 1.125 0 01-1.449.12l-.738-.527c-.35-.25-.806-.272-1.203-.107-.397.165-.71.505-.781.929l-.149.894c-.09.542-.56.94-1.11.94h-1.094c-.55 0-1.019-.398-1.11-.94l-.148-.894c-.071-.424-.384-.764-.781-.93-.398-.164-.854-.142-1.204.108l-.738.527c-.447.32-1.06.269-1.45-.12l-.773-.774a1.125 1.125 0 01-.12-1.45l.527-.737c.25-.35.273-.806.108-1.204-.165-.397-.505-.71-.93-.78l-.894-.15c-.542-.09-.94-.56-.94-1.109v-1.094c0-.55.398-1.02.94-1.11l.894-.149c.424-.07.765-.383.93-.78.165-.398.143-.854-.107-1.204l-.527-.738a1.125 1.125 0 01.12-1.45l.773-.773a1.125 1.125 0 011.45-.12l.737.527c.35.25.807.272 1.204.107.397-.165.71-.505.78-.929l.15-.894z" />
+        <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+    ),
+    services: (
+      <svg className="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z" />
+      </svg>
+    ),
+    lens: (
+      <svg className="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <circle cx="12" cy="12" r="10" />
+        <circle cx="12" cy="12" r="6" />
+        <circle cx="12" cy="12" r="2" />
+      </svg>
+    ),
+    heart: (
+      <svg className="w-8 h-8 md:w-10 md:h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+      </svg>
+    )
+  };
+
   return (
     <div className="mb-8">
       <span className="block text-xs uppercase tracking-[0.2em] text-studio-accent mb-2">{subtitle}</span>
-      <h2 className="font-serif text-5xl md:text-6xl text-studio-white">{title}</h2>
+      <div className="flex items-center gap-4">
+        {icon && (
+          <span className="text-studio-accent opacity-60">
+            {icons[icon]}
+          </span>
+        )}
+        <h2 className="font-serif text-5xl md:text-6xl text-studio-white">{title}</h2>
+      </div>
     </div>
   );
 }

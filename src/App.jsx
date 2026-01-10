@@ -9,11 +9,18 @@ import About from './pages/About.jsx';
 import Contact from './pages/Contact.jsx';
 import PageTransition from './components/PageTransition.jsx';
 
+import CinematicBackground from './components/CinematicBackground.jsx';
+import Cursor from './components/Cursor.jsx';
+import ScrollToTop from './components/ScrollToTop.jsx';
+
 export default function App() {
   const location = useLocation();
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col relative">
+      <ScrollToTop />
+      <Cursor />
+      <CinematicBackground />
       <Navbar />
       <div className="flex-1">
         <AnimatePresence mode="wait">

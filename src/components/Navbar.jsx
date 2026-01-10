@@ -14,7 +14,13 @@ const navItems = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isDark, setIsDark] = useState(true);
+
+  // Initialize theme from localStorage, default to dark mode
+  const [isDark, setIsDark] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? savedTheme === 'dark' : true;
+  });
+
   const location = useLocation();
 
   useEffect(() => setOpen(false), [location.pathname]);
@@ -26,13 +32,15 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Theme Toggle Logic
+  // Theme Toggle Logic with localStorage persistence
   useEffect(() => {
     const root = document.documentElement;
     if (isDark) {
       root.classList.remove("light-mode");
+      localStorage.setItem('theme', 'dark');
     } else {
       root.classList.add("light-mode");
+      localStorage.setItem('theme', 'light');
     }
   }, [isDark]);
 
