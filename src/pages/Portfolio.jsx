@@ -3,16 +3,22 @@
 import { motion } from "framer-motion";
 import hand_ring_1 from "../assets/portfolio/hand_ring_1.jpg";
 import hand_ring_2 from "../assets/portfolio/hand_ring_2.jpg";
+import ritual_1 from "../assets/portfolio/ritual_1.jpeg";
+import ritual_2 from "../assets/portfolio/ritual_2.jpeg";
+import ritual_3 from "../assets/portfolio/ritual_3.jpg";
+import edited_1 from "../assets/portfolio/edited_1.jpeg";
+import edited_2 from "../assets/portfolio/edited_2.jpeg";
+
 
 const portfolioItems = [
   { id: 1, src: hand_ring_1, title: "Rutuja & Dhruv", category: "Wedding" },
   { id: 2, src: hand_ring_2, title: "Mugdha & Kshitij", category: "Wedding" },
-  { id: 3, src: "https://images.unsplash.com/photo-1544979590-37e9b47cd7bc?auto=format&fit=crop&q=80&w=1954", title: "Shrushti & Kunal", category: "Engagement" },
-  { id: 4, src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070", title: "Avantika & Rohan", category: "Wedding" },
+  { id: 3, src: ritual_3, title: "Shrushti & Kunal", category: "Engagement" },
+  { id: 4, src: ritual_1, title: "Avantika & Rohan", category: "Wedding" },
   { id: 5, src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=2070", title: "Neesha & Pratik", category: "Portraits" },
-  { id: 6, src: "https://images.unsplash.com/photo-1520854221256-17451cc330e7?auto=format&fit=crop&q=80&w=1974", title: "Cindy & Ayush", category: "Details" },
-  { id: 7, src: "https://images.unsplash.com/photo-1511285560982-1356c11d4606?auto=format&fit=crop&q=80&w=2076", title: "Amrita & Vihang", category: "Reception" },
-  { id: 8, src: "https://images.unsplash.com/photo-1522673607200-1645062cd958?auto=format&fit=crop&q=80&w=2070", title: "Sana & Rahil", category: "Candid" },
+  { id: 6, src: edited_1, title: "Cindy & Ayush", category: "Details" },
+  { id: 7, src: ritual_2, title: "Amrita & Vihang", category: "Reception" },
+  { id: 8, src: edited_2, title: "Sana & Rahil", category: "Candid" },
 ];
 
 export default function Portfolio() {
