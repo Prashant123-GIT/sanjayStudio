@@ -1,9 +1,12 @@
+/* eslint-disable no-unused-vars */
 // pages/Portfolio.jsx
 import { motion } from "framer-motion";
+import hand_ring_1 from "../assets/portfolio/hand_ring_1.jpg";
+import hand_ring_2 from "../assets/portfolio/hand_ring_2.jpg";
 
 const portfolioItems = [
-  { id: 1, src: "https://images.unsplash.com/photo-1623156293998-3238ab3c9a62?auto=format&fit=crop&q=80&w=1974", title: "Rutuja & Dhruv", category: "Wedding" },
-  { id: 2, src: "https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&q=80&w=1888", title: "Mugdha & Kshitij", category: "Pre-Wedding" },
+  { id: 1, src: hand_ring_1, title: "Rutuja & Dhruv", category: "Wedding" },
+  { id: 2, src: hand_ring_2, title: "Mugdha & Kshitij", category: "Wedding" },
   { id: 3, src: "https://images.unsplash.com/photo-1544979590-37e9b47cd7bc?auto=format&fit=crop&q=80&w=1954", title: "Shrushti & Kunal", category: "Engagement" },
   { id: 4, src: "https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&q=80&w=2070", title: "Avantika & Rohan", category: "Wedding" },
   { id: 5, src: "https://images.unsplash.com/photo-1606800052052-a08af7148866?auto=format&fit=crop&q=80&w=2070", title: "Neesha & Pratik", category: "Portraits" },
