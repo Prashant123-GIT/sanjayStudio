@@ -8,6 +8,8 @@ import ritual_2 from "../assets/portfolio/ritual_2.jpeg";
 import ritual_3 from "../assets/portfolio/ritual_3.jpg";
 import edited_1 from "../assets/portfolio/edited_1.jpeg";
 import edited_2 from "../assets/portfolio/edited_2.jpeg";
+import photography_1 from "../assets/portfolio/photography_1.jpg";
+import best_1 from "../assets/portfolio/best_1.jpg";
 
 
 const portfolioItems = [
@@ -19,6 +21,8 @@ const portfolioItems = [
   { id: 6, src: edited_1, title: "Cindy & Ayush", category: "Details" },
   { id: 7, src: ritual_2, title: "Amrita & Vihang", category: "Reception" },
   { id: 8, src: edited_2, title: "Sana & Rahil", category: "Candid" },
+  { id: 9, src: photography_1, title: "", category: "Candid" },
+  { id: 10, src: best_1, title: "", category: "Pre-Wedding" },
 ];
 
 export default function Portfolio() {
