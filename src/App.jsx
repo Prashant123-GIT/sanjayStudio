@@ -12,12 +12,14 @@ import PageTransition from './components/PageTransition.jsx';
 import CinematicBackground from './components/CinematicBackground.jsx';
 import Cursor from './components/Cursor.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
+import CinematicLoader from './components/CinematicLoader.jsx';
 
 export default function App() {
   const location = useLocation();
 
   return (
     <div className="flex min-h-screen flex-col relative overflow-x-hidden max-w-full">
+      <CinematicLoader />
       <ScrollToTop />
       <Cursor />
       <CinematicBackground />
