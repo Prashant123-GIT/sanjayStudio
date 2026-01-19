@@ -13,17 +13,24 @@ import CinematicBackground from './components/CinematicBackground.jsx';
 import Cursor from './components/Cursor.jsx';
 import ScrollToTop from './components/ScrollToTop.jsx';
 import CinematicLoader from './components/CinematicLoader.jsx';
+import LoginSelection from './pages/LoginSelection.jsx';
+import VisitorLogin from './pages/VisitorLogin.jsx';
+import ClientDashboard from './pages/ClientDashboard.jsx';
+import AdminPanel from './pages/AdminPanel.jsx';
 
 export default function App() {
   const location = useLocation();
+
+  // Hide navbar and footer only on client dashboard
+  const hideNavAndFooter = location.pathname === '/dashboard';
 
   return (
     <div className="flex min-h-screen flex-col relative overflow-x-hidden max-w-full">
       <CinematicLoader />
       <ScrollToTop />
-      <Cursor />
+      {/* <Cursor /> */}
       <CinematicBackground />
-      <Navbar />
+      {!hideNavAndFooter && <Navbar />}
       <div className="flex-1">
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
@@ -31,6 +38,10 @@ export default function App() {
               path="/"
               element={<PageTransition><Home /></PageTransition>}
             />
+            <Route path="/login" element={<PageTransition><LoginSelection /></PageTransition>} />
+            <Route path="/visitor-login" element={<PageTransition><VisitorLogin /></PageTransition>} />
+            <Route path="/dashboard" element={<PageTransition><ClientDashboard /></PageTransition>} />
+            <Route path="/admin-access" element={<PageTransition><AdminPanel /></PageTransition>} />
             <Route
               path="/portfolio"
               element={<PageTransition><Portfolio /></PageTransition>}
@@ -50,7 +61,7 @@ export default function App() {
           </Routes>
         </AnimatePresence>
       </div>
-      <Footer />
+      {!hideNavAndFooter && <Footer />}
     </div>
   );
 }

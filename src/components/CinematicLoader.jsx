@@ -8,13 +8,11 @@ export default function CinematicLoader() {
 
     useEffect(() => {
         // Simulate loading progress
-        const duration = 3000; // 3 seconds for better effect
-        const interval = 30;
-        const increment = (interval / duration) * 100;
+        const duration = 2000; // 3 seconds for better effect
 
         const timer = setInterval(() => {
             setProgress((prev) => {
-                const next = prev + increment;
+                const next = duration;
                 if (next >= 100) {
                     clearInterval(timer);
                     // Delay before hiding to show 100%
@@ -23,7 +21,7 @@ export default function CinematicLoader() {
                 }
                 return next;
             });
-        }, interval);
+        }, duration);
 
         return () => clearInterval(timer);
     }, []);

@@ -10,6 +10,7 @@ const navItems = [
   { to: "/about", label: "Studio" },
   { to: "/services", label: "Services" },
   { to: "/contact", label: "Contact" },
+  { to: "/login", label: "Login" },
 ];
 
 export default function Navbar() {
@@ -43,6 +44,8 @@ export default function Navbar() {
       root.classList.add("light-mode");
       localStorage.setItem("theme", "light");
     }
+    // Dispatch event for other components (like AdminPanel) to sync
+    window.dispatchEvent(new Event('theme-change'));
   }, [isDark]);
 
   // Dynamic Text Color Logic
@@ -60,11 +63,10 @@ export default function Navbar() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled
-            ? "py-4 bg-studio-black/80 backdrop-blur-md"
-            : "py-6 bg-transparent"
-        } ${borderColorClass} border-b`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
+          ? "py-4 bg-studio-black/80 backdrop-blur-md"
+          : "py-6 bg-transparent"
+          } ${borderColorClass} border-b`}
       >
         <div className="mx-auto max-w-[1400px] px-6 md:px-12 flex items-center justify-between">
           {/* Logo */}
@@ -111,10 +113,9 @@ export default function Navbar() {
                 key={item.to}
                 to={item.to}
                 className={({ isActive }) =>
-                  `text-xs font-medium tracking-[0.2em] uppercase transition-all duration-300 ${
-                    isActive
-                      ? "text-studio-accent"
-                      : `${textColorClass} opacity-70 hover:opacity-100`
+                  `text-xs font-medium tracking-[0.2em] uppercase transition-all duration-300 ${isActive
+                    ? "text-studio-accent"
+                    : `${textColorClass} opacity-70 hover:opacity-100`
                   }`
                 }
               >
@@ -204,19 +205,16 @@ export default function Navbar() {
               className="h-10 w-10 flex flex-col justify-center gap-1.5 items-end group"
             >
               <span
-                className={`block h-[2px] bg-current transition-all duration-300 ${textColorClass} ${
-                  open ? "w-6 -rotate-45 translate-y-2" : "w-8 group-hover:w-6"
-                }`}
+                className={`block h-[2px] bg-current transition-all duration-300 ${textColorClass} ${open ? "w-6 -rotate-45 translate-y-2" : "w-8 group-hover:w-6"
+                  }`}
               />
               <span
-                className={`block h-[2px] bg-current transition-all duration-300 ${textColorClass} ${
-                  open ? "opacity-0" : "w-6 group-hover:w-8"
-                }`}
+                className={`block h-[2px] bg-current transition-all duration-300 ${textColorClass} ${open ? "opacity-0" : "w-6 group-hover:w-8"
+                  }`}
               />
               <span
-                className={`block h-[2px] bg-current transition-all duration-300 ${textColorClass} ${
-                  open ? "w-6 rotate-45 -translate-y-2" : "w-4 group-hover:w-6"
-                }`}
+                className={`block h-[2px] bg-current transition-all duration-300 ${textColorClass} ${open ? "w-6 rotate-45 -translate-y-2" : "w-4 group-hover:w-6"
+                  }`}
               />
             </button>
           </div>

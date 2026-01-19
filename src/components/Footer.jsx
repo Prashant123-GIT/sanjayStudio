@@ -46,6 +46,7 @@ export default function Footer() {
         <div className="border-t border-studio-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-studio-white/30 uppercase tracking-wider">
           <p>&copy; {new Date().getFullYear()} Sanjay Studio. All rights reserved.</p>
           <p>Designed with Intent.</p>
+          <a href="/admin-access" className="hover:text-studio-white transition-colors">Admin</a>
         </div>
       </div>
     </footer>
